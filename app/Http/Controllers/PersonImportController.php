@@ -22,7 +22,8 @@ class PersonImportController extends Controller
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             //throw validation errors
             $failures = $e->failures();
-            return view('home', compact('failures'));
+            //return view('home', compact('failures'));
+            return response()->json($failures->toArray(), 422);
         }
 
     }
@@ -30,7 +31,7 @@ class PersonImportController extends Controller
     public function status()
     {
         $id = session('import');
-        //sending data to progress which are stored from event
+        //sending data to progress bar which are stored from event
         $data = [
             'started'     => filled(cache("start_date_$id")),
             'finished'    => filled(cache("end_date_$id")),
